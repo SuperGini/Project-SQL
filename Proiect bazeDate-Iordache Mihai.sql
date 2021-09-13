@@ -149,7 +149,7 @@ CREATE INDEX song_speed_search ON song(title);
 #POPULATE THE TABLES
 
 
-# INSERT user's INTO TABLE
+# INSERT users INTO TABLE
 INSERT INTO user (first_name, last_name, username, email, birth_date, join_date, account_type) VALUES
 	('Warren', 'Ryana', 'Foxy','warren_r@yahoo.com', '2015-03-26', '2021-02-15', DEFAULT),
     ('Clive', 'Brett', 'MagicMan', 'magic@gmail.com', '1983-12-25', '2018-08-20', 'PREMIUM'),
@@ -166,7 +166,7 @@ INSERT INTO user (first_name, last_name, username, email, birth_date, join_date,
 INSERT INTO user (first_name, last_name, username, email, birth_date, join_date, account_type) VALUES
  ('Ramn', 'Felii', 'fe', 'feli@yao.com', '2004-09-03', '2018-08-01', 'PREMIUM');
 
-#INSER users's ADDRESS INTO address TABLE 
+#INSER users ADDRESS INTO address TABLE 
 INSERT INTO address(country, city, id_user) VALUES
 	('USA', 'New York', 1),
     ('USA', 'Philadelphia',3),
@@ -376,7 +376,7 @@ UPDATE song SET duration = ADDTIME(duration,'00:01:00') WHERE title = 'Freedom';
 #change username Trish of user Trisha Gladis
 UPDATE user SET username = 'TG_gladiator' WHERE first_name = 'Trisha' AND last_name = 'Gladis';
 
-#add emails to all the users that don't have an email regitered to them. The form of the email will be: first_name-last_name@spotify.com;
+#add emails to all the users that dont have an email regitered to them. The form of the email will be: first_name-last_name@spotify.com;
 UPDATE user SET email = CONCAT(first_name, '-', last_name, '@spotify.com') WHERE email IS NULL;
 
 #update emails that contains @spotify.com so that the email adress has only small leters;
@@ -386,7 +386,7 @@ UPDATE user SET email = LOWER(email) WHERE email LIKE '%@spotify.com';
 #DELETE -------------------------------------------------------------------------------------------------------------------------
 
 #delete user with id = 1 and all the data related to her -> address / authority / play_list / play_list_song data;
-#to delete the user I need to add DELETE CASCADE to all foreign keys related to the user info, otherwise it doesn't let me delete the user
+#to delete the user I need to add DELETE CASCADE to all foreign keys related to the user info, otherwise it doesnt let me delete the user
 	
 
 #add DELETE CASCADE to fereign key constraint to id_user in address table
@@ -425,7 +425,7 @@ FOREIGN KEY(id_play_list) REFERENCES play_list(id) ON DELETE CASCADE;
 DELETE u FROM user u WHERE u.id = 1; # -> deletes all the data for the user from the following tables: USER / ADDRESS / AUTHORITY / PLAY_LIST / PLAY_LIST_SONG
 
 									 
-#delete the song with id =1; -> i want to delete only the song, but the album and the artist remain in the database. I don't want to make a cascade delete for
+#delete the song with id =1; -> i want to delete only the song, but the album and the artist remain in the database. I dont want to make a cascade delete for
 #the data in this 2 tables. But when I delete the song I want the row that has the foreign key of the song in the play_list_song table to be deleted								
 							
 
@@ -440,7 +440,7 @@ FOREIGN KEY(id_song) REFERENCES song(id) ON DELETE CASCADE;
 DELETE s FROM song s WHERE s.id =1;  
 
 
-#delete the song with the tile = Nevermind. Don't use SET sql_safe_updates = 0 or the id of the song in the WHERE caluse
+#delete the song with the tile = Nevermind. Dont use SET sql_safe_updates = 0 or the id of the song in the WHERE caluse
 SET sql_safe_updates=1;
 DELETE s FROM song s JOIN
 (SELECT id FROM song WHERE title = 'Nevermind') g
@@ -485,9 +485,9 @@ SELECT YEAR(release_date) FROM album WHERE name = 'What a Feeling';
 #step2 -> make a list of all the release years of the albums that were released between the years of these 2 albums
 SELECT YEAR(release_date) FROM album WHERE YEAR(RELEASE_date)
 	BETWEEN 
-		(SELECT YEAR(release_date) FROM album WHERE name = 'What a Feeling')
+	(SELECT YEAR(release_date) FROM album WHERE name = 'What a Feeling')
 	AND
-		(SELECT YEAR(release_date) FROM album WHERE name = 'Mythologie');
+	(SELECT YEAR(release_date) FROM album WHERE name = 'Mythologie');
         
 #step 3 -> make the query        
 SELECT a.name AS album_name, s.title AS song_title, YEAR(a.release_date) AS release_year 
@@ -495,11 +495,11 @@ FROM song s
 JOIN album a ON  a.id = s.id_album
 WHERE YEAR(a.release_date) IN (
 
-								SELECT YEAR(release_date) FROM album WHERE YEAR(RELEASE_date)
-								BETWEEN 
-										(SELECT YEAR(release_date) FROM album WHERE name = 'What a Feeling')
-								AND
-										(SELECT YEAR(release_date) FROM album WHERE name = 'Mythologie')
+				SELECT YEAR(release_date) FROM album WHERE YEAR(RELEASE_date)
+				BETWEEN 
+				(SELECT YEAR(release_date) FROM album WHERE name = 'What a Feeling')
+				AND
+				(SELECT YEAR(release_date) FROM album WHERE name = 'Mythologie')
 ) ORDER BY release_year;   
 
 
@@ -508,11 +508,11 @@ WHERE YEAR(a.release_date) IN (
 # show userers that have the same account type and joined in the same year as Justin Ulysses
 SELECT concat(first_name, ' ', last_name) AS users
 FROM user WHERE (account_type, YEAR(join_date)) = 
-												(SELECT
-												u.account_type,
-												YEAR(join_date)
-												FROM user u
-												WHERE first_name = 'Justin' AND last_name = 'Ulysses');
+						(SELECT
+						u.account_type,
+						YEAR(join_date)
+						FROM user u
+						WHERE first_name = 'Justin' AND last_name = 'Ulysses');
 
 
 #JOIN 1---------------------------------------------------
@@ -680,7 +680,7 @@ SELECT * FROM info_user;
 
 #VIEW 2 ------------------------------------------------------------------------
 
-# show how many play lists has each user (show all the users including the ones that don't have any play lists)
+# show how many play lists has each user (show all the users including the ones that dont have any play lists)
 CREATE OR REPLACE VIEW user_nr_play_lists AS
 SELECT
 	u.username,
@@ -814,7 +814,7 @@ select @result;
 
 #FUNCTION 3 ------------------------------------------------------------
 #create a function that recives as parameter fist_name and last_name of the user and if he has 2 years or more since he joined the app and if he has a PREMIUM
-#account he recives a 1 month bonus PREMIUM, if he has les than 2 years he recives 15 days of PREMIUM if he doesn't have a PREMIUM account tell him to buy a PREMIUM ACCOUNT!!
+#account he recives a 1 month bonus PREMIUM, if he has les than 2 years he recives 15 days of PREMIUM if he doesnt have a PREMIUM account tell him to buy a PREMIUM ACCOUNT!!
 DELIMITER //
 CREATE FUNCTION giveBonusPremiumMonth(firstName VARCHAR(50), lastName VARCHAR(50)) RETURNS varchar(100)
 BEGIN 
@@ -869,15 +869,15 @@ CREATE PROCEDURE userPlaylistAndSongs(IN username VARCHAR(50), OUT nrOfSongs INT
 BEGIN
 
  	SELECT
-		count(pls.id_song),
-		group_concat(s.title ORDER BY s.title SEPARATOR '/' )
-    INTO
-		nrOfSongs,
-        songs 
+	  count(pls.id_song),
+	  group_concat(s.title ORDER BY s.title SEPARATOR '/' )
+    	INTO
+	  nrOfSongs,
+	  songs
 	FROM user u
-		JOIN play_list pl ON u.id = pl.id_user
-		JOIN play_list_song pls ON pl.id = pls.id_play_list
-		JOIN song s ON pls.id_song = s.id
+	JOIN play_list pl ON u.id = pl.id_user
+	JOIN play_list_song pls ON pl.id = pls.id_play_list
+	JOIN song s ON pls.id_song = s.id
 	WHERE u.username = username;
 
 END;
@@ -895,15 +895,15 @@ BEGIN
 
 
 	SELECT u.account_type INTO x_account
-    FROM user u 
+    	FROM user u 
 	WHERE u.username = username;
     
     
     
 	CASE x_account
 		WHEN 'PREMIUM' THEN SET message = concat('Username: ',username, ' has an ', x_account, ' account!');
-        WHEN 'NORMAL' THEN SET message = concat('Username: ',username, ' has an ', x_account, ' account!');
-        ELSE SET message = concat(username,  'doesnt have any type of account atached');
+        	WHEN 'NORMAL' THEN SET message = concat('Username: ',username, ' has an ', x_account, ' account!');
+        	ELSE SET message = concat(username,  'doesnt have any type of account atached');
 	END CASE;
 
 END;
@@ -921,7 +921,7 @@ DELIMITER //
 CREATE PROCEDURE showUsername(IN songName VARCHAR(150))
 BEGIN
 
-	 DECLARE users VARCHAR(200);
+     DECLARE users VARCHAR(200);
      DECLARE users_count INT DEFAULT 0;
      DECLARE message VARCHAR(100) DEFAULT concat('Song ', songName, ' does not exists!!');
      DECLARE song_id INT;
@@ -938,9 +938,9 @@ INTO users, users_count, song_id
 WHERE s.title = songName;
 
 
-	IF users_count >= 3 THEN
-  		SET message = concat(songName, ' is a HIT!!!!!!!!!!');
-  	END IF;
+    IF users_count >= 3 THEN
+	SET message = concat(songName, ' is a HIT!!!!!!!!!!');
+    END IF;
     
     IF users_count < 3 AND users_count >= 1 THEN
   		SET message = concat(songName, ' is not a HIT!!!!!!!');
@@ -987,58 +987,58 @@ CREATE PROCEDURE spam_comercials()
 
 BEGIN
 
-	DECLARE accountType VARCHAR(20);
-	DECLARE country VARCHAR(50);
+    DECLARE accountType VARCHAR(20);
+    DECLARE country VARCHAR(50);
     DECLARE flag VARCHAR(10) DEFAULT 'green';
     DECLARE user_name VARCHAR(100);
     DECLARE response TEXT;
-    declare years INT;
+    DECLARE years INT;
     
 
-	DECLARE comercial_cursor CURSOR FOR
-					 SELECT
+    DECLARE comercial_cursor CURSOR FOR
+					SELECT
 						CONCAT(u.first_name, ' ', u.last_name) AS years, 
 						TIMESTAMPDIFF(YEAR, u.birth_date, CURDATE()),
 						u.account_type,
-                        a.country
+						a.country
 					 FROM user u
-						JOIN address a
-						ON u.id = a.id_user
-                     ORDER BY years;
+					 JOIN address a
+					 ON u.id = a.id_user
+			     		 ORDER BY years;
                      
       
      DECLARE CONTINUE HANDLER FOR NOT FOUND
-		BEGIN
-			SET flag = 'red';
-		END;
+				BEGIN
+				   SET flag = 'red';
+				END;
         
 	TRUNCATE TABLE comercial_table;
     
 	OPEN comercial_cursor; 
         spin: LOOP
-			FETCH comercial_cursor INTO user_name, years, accountType, country;
-            
-			IF flag = 'red' THEN
-				LEAVE spin;
-			END IF;
+	    FETCH comercial_cursor INTO user_name, years, accountType, country;
+
+	    IF flag = 'red' THEN
+		LEAVE spin;
+	    END IF;
             
             IF  ((18 <= years AND years <= 50) AND accountType = 'NORMAL') THEN
                 SET response = concat('send young people comercials for country ', country);
             END IF;
             
             IF (years < 18 AND accountType = 'NORMAL') THEN
-				 SET response = concat('send kids comercials for country ', country);
-			END IF;
+		 SET response = concat('send kids comercials for country ', country);
+	    END IF;
             
             IF(years > 50 AND accountType = 'NORMAL') THEN
-				 SET response = concat('send old people comercials for country ', country);
-			 END IF;
+		 SET response = concat('send old people comercials for country ', country);
+	    END IF;
              
              IF (accountType = 'PREMIUM') THEN
-				SET response = 'dont send comercials - > this users pays for app!!!!';
+		SET response = 'dont send comercials - > this users pays for app!!!!';
              END IF;
 			
-			INSERT INTO comercial_table VALUES (NULL, user_name, years, accountType, response);
+	INSERT INTO comercial_table VALUES (NULL, user_name, years, accountType, response);
             
         END LOOP;  
 	CLOSE comercial_cursor;  
@@ -1061,12 +1061,12 @@ BEGIN
     DECLARE playList VARCHAR(100);
   
     DECLARE cursor_x CURSOR FOR 						
-								SELECT s.id, s.title, pl.name 
-									FROM play_list pl
-									JOIN user u ON u.id = pl.id_user
-									JOIN play_list_song pls ON pl.id = pls.id_play_list
-									JOIN song s ON pls.id_song = s.id
-								WHERE u.username = user_name;
+			SELECT s.id, s.title, pl.name 
+				FROM play_list pl
+				JOIN user u ON u.id = pl.id_user
+				JOIN play_list_song pls ON pl.id = pls.id_play_list
+				JOIN song s ON pls.id_song = s.id
+			WHERE u.username = user_name;
                         
 	DECLARE CONTINUE HANDLER FOR NOT FOUND
 		BEGIN
@@ -1077,24 +1077,24 @@ BEGIN
 	SET playListSongs = '';
 	SET groupPlayList= '';
             
-      OPEN  cursor_x;
-		spin: LOOP
-			FETCH cursor_x INTO songId, songs, playList;
-				
-			IF flag = 0 THEN
-				LEAVE spin;
-			END IF;
+OPEN  cursor_x;
+	spin: LOOP
+		FETCH cursor_x INTO songId, songs, playList;
+
+		IF flag = 0 THEN
+			LEAVE spin;
+		END IF;
             
-            IF songId > 0 THEN
-				SET song_count = song_count + 1;
-				SET playListSongs = CONCAT_WS('/ ', songs, playListSongs);
+            	IF songId > 0 THEN
+			SET song_count = song_count + 1;
+			SET playListSongs = CONCAT_WS('/ ', songs, playListSongs);
                 
-                IF (groupPlayList NOT LIKE CONCAT('%' , playList , '%')) THEN
-					SET groupPlayList = CONCAT_WS('; ',playList, groupPlayList);
-				END IF;
-            END IF;    
-      END LOOP;
-	CLOSE cursor_x; 
+               		IF (groupPlayList NOT LIKE CONCAT('%' , playList , '%')) THEN
+		     		SET groupPlayList = CONCAT_WS('; ',playList, groupPlayList);
+			END IF;
+            	END IF;    
+	END LOOP;
+CLOSE cursor_x; 
 END;
 //
 DELIMITER ;
@@ -1107,7 +1107,7 @@ SELECT @song_count, @song_title, @playlist_name;
 DELIMITER //
 CREATE PROCEDURE showWhatSongsFromAlbumsAreInUsersPlaylists(IN albumName VARCHAR(200))
 BEGIN
-	DECLARE flag INT DEFAULT 1;
+    DECLARE flag INT DEFAULT 1;
     DECLARE userX VARCHAR(50);
     DECLARE songX VARCHAR(100);
     DECLARE allUsers TEXT DEFAULT ''; #neaparat de pus default '' ca altfel nu merg if-urile####################
@@ -1115,19 +1115,19 @@ BEGIN
     DECLARE result TEXT DEFAULT '';
 
 	DECLARE cursor_album CURSOR FOR
-								SELECT u.username, s.title 
-										FROM user u
-										JOIN play_list pl ON u.id = pl.id_user
-										JOIN play_list_song pls ON pl.id = pls.id_play_list
-										JOIN song s ON pls.id_song = s.id
-										JOIN album a ON a.id = s.id_album
-								WHERE a.name = albumName;
+				SELECT u.username, s.title 
+						FROM user u
+						JOIN play_list pl ON u.id = pl.id_user
+						JOIN play_list_song pls ON pl.id = pls.id_play_list
+						JOIN song s ON pls.id_song = s.id
+						JOIN album a ON a.id = s.id_album
+				WHERE a.name = albumName;
 								
                                 
 	DECLARE CONTINUE HANDLER FOR NOT FOUND
-								BEGIN
-									SET flag = 0;
-								END;
+					BEGIN
+					  SET flag = 0;
+					END;
 	SET result = '';
 
     OPEN cursor_album;
