@@ -950,7 +950,7 @@ WHERE s.title = songName;
 	SET message = concat(' No user has ', songName, ' in theyer playlist');
         SET users = '0';
         SET users_count = 0;
-	END IF;
+    END IF;
     
    select users, users_count, message;
 
