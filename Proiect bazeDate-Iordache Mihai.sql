@@ -10,7 +10,7 @@ USE wannabe_sptify_database;
 
 
 CREATE TABLE IF NOT EXISTS adress(
-	id INT UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    id INT UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
     country VARCHAR(50) NOT NULL,
     city VARCHAR(50)
    
@@ -18,7 +18,7 @@ CREATE TABLE IF NOT EXISTS adress(
 
 
 CREATE TABLE IF NOT EXISTS user(
-	id INT UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    id INT UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
     first_name VARCHAR(50) NOT NULL,
     last_name VARCHAR(50) NOT NULL,
     username VARCHAR(50)  UNIQUE NOT NULL,
@@ -33,7 +33,7 @@ CREATE TABLE IF NOT EXISTS user(
 
 
 CREATE TABLE IF NOT EXISTS autority(
-	id INT UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    id INT UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
     user_authority SET('ADMIN', 'USER') DEFAULT 'USER',
     id_user INT UNSIGNED NOT NULL,
     FOREIGN KEY(id_user) REFERENCES user(id)
@@ -48,12 +48,12 @@ CREATE TABLE IF NOT EXISTS autority(
 #---------------------------------------------------------------------- ARTIST/ALBUM/SONG/PLAY-LIST/PLAY-LIST-SONG
 
 CREATE TABLE IF NOT EXISTS artist(
-	id INT UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    id INT UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
     name VARCHAR(100) NOT NULL  
 );
 
 CREATE TABLE IF NOT EXISTS album(
-	id INT UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    id INT UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
     name VARCHAR(200) NOT NULL,
     release_date DATE
 );
@@ -61,7 +61,7 @@ CREATE TABLE IF NOT EXISTS album(
 
 
 CREATE TABLE IF NOT EXISTS song(
-	id INT UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    id INT UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
     title VARCHAR(100),
     duration TIME NOT NULL,
     id_artist INT UNSIGNED NOT NULL,
@@ -74,7 +74,7 @@ CREATE TABLE IF NOT EXISTS song(
 
 
 CREATE TABLE IF NOT EXISTS list(
-	id INT UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    id INT UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
     id_user INT UNSIGNED NOT NULL,
     name VARCHAR(100),
     id_song INT UNSIGNED NOT NULL,
@@ -85,7 +85,7 @@ CREATE TABLE IF NOT EXISTS list(
 #mi-am dat seama ca e o greseala in conceptia bazei de date. Creez tabela intermediara de mai jos @ManyToMany. Astfel fiecare user poate avea mai multe play_list-uri
 
 CREATE TABLE IF NOT EXISTS play_list_song(
-	id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
     id_list INT UNSIGNED NOT NULL,
     id_song INT UNSIGNED NOT NULL,
     FOREIGN KEY(id_list) REFERENCES list(id),
@@ -151,7 +151,7 @@ CREATE INDEX song_speed_search ON song(title);
 
 # INSERT users INTO TABLE
 INSERT INTO user (first_name, last_name, username, email, birth_date, join_date, account_type) VALUES
-	('Warren', 'Ryana', 'Foxy','warren_r@yahoo.com', '2015-03-26', '2021-02-15', DEFAULT),
+    ('Warren', 'Ryana', 'Foxy','warren_r@yahoo.com', '2015-03-26', '2021-02-15', DEFAULT),
     ('Clive', 'Brett', 'MagicMan', 'magic@gmail.com', '1983-12-25', '2018-08-20', 'PREMIUM'),
     ('Toby', 'Cristianne', 'yolo', NULL, '1975-04-10', '2016-04-02', 'PREMIUM'),
     ('Justin', 'Ulysses', 'Popey', NULL, '1965-07-30', '2019-05-01', 'PREMIUM'),
@@ -168,7 +168,7 @@ INSERT INTO user (first_name, last_name, username, email, birth_date, join_date,
 
 #INSER users ADDRESS INTO address TABLE 
 INSERT INTO address(country, city, id_user) VALUES
-	('USA', 'New York', 1),
+    ('USA', 'New York', 1),
     ('USA', 'Philadelphia',3),
     ('USA', 'Washington', 2),
     ('UK', 'London', 5),
@@ -182,7 +182,7 @@ INSERT INTO address(country, city, id_user) VALUES
     
  #INSERT users' autositie's INTO autority TABLE   
  INSERT INTO authority(user_authority, id_user) VALUES
-	(DEFAULT, 1),
+    (DEFAULT, 1),
     (DEFAULT, 2),
     ('USER', 5),
     ('USER', 6),
@@ -196,7 +196,7 @@ INSERT INTO address(country, city, id_user) VALUES
     
     #INSERT artists INTO artist TABLE
     INSERT INTO artist(name) VALUES
-	('Above & Beyond'),
+    ('Above & Beyond'),
     ('Lukas Termena'),
     ('David Brothers'),
     ('ATB'),
@@ -219,7 +219,7 @@ INSERT INTO address(country, city, id_user) VALUES
     ('Lane 8'),
     ('Superheart'),
     ('Lana Del Rey'),
-	('Oleg Byonic'),
+    ('Oleg Byonic'),
     ('SAINt JHN, Lenny Kravitz'),
     ('Passenger 10'),
     ('Tyoto'),
@@ -230,7 +230,7 @@ INSERT INTO address(country, city, id_user) VALUES
     
 #INSERT album name and date INTO album TABLE 
 INSERT INTO album(name, release_date) VALUES
-	('Peace OF Mind', '2015-05-26'),
+    ('Peace OF Mind', '2015-05-26'),
     ('Freedom', '2019-04-05'),
     ('Curracloe', '2016-08-23'),
     ('No Silence', '2012-07-06'),
@@ -261,7 +261,7 @@ INSERT INTO album(name, release_date) VALUES
     
 #INSERT song title, duration and foreign keys INTO song TABLE    
 INSERT INTO song(title, duration, id_artist, id_album) VALUES
-	('Peace OF Mind - Croquet Club Remix', '00:05:15', 1, 1),
+    ('Peace OF Mind - Croquet Club Remix', '00:05:15', 1, 1),
     ('Freedom', '00:04:48',2, 2),
     ('Curracloe', '00:08:52', 3, 3),
     ('Ecstasy', '00:04:21', 4, 4),
@@ -350,7 +350,7 @@ INSERT INTO play_list(id_user, name) VALUES
     
 #INSERT foreign keys of play_list table and song table INTO play_list_song TABLE @ManyToMany 
 INSERT INTO play_list_song (id_play_list, id_song) VALUES
-	(1, 1), (1, 3), (1, 6), (1, 8), (1, 10), (1, 15), (1, 61), (1, 20),(1, 62), (1, 64),
+    (1, 1), (1, 3), (1, 6), (1, 8), (1, 10), (1, 15), (1, 61), (1, 20),(1, 62), (1, 64),
     (2, 11), (2, 25), (2, 54), (2, 18), (2, 43),
     (3, 45), (3, 19), (3, 20), (3, 33), (3, 48), (3, 5),
     (4, 17), (4, 2),
@@ -570,8 +570,8 @@ SELECT
 	a.name AS ablum_name,
 	art.name AS artist_name
 FROM song s
-    JOIN artist art ON s.id_artist = art.id
-    LEFT JOIN album a ON s.id_album = a.id
+    	JOIN artist art ON s.id_artist = art.id
+    	LEFT JOIN album a ON s.id_album = a.id
 GROUP BY ablum_name, artist_name
 ORDER BY ablum_name DESC;
     
@@ -626,7 +626,7 @@ SELECT
     CONCAT_WS('-', first_name, last_name) AS name,
 	CONCAT(
 	TIMESTAMPDIFF(YEAR, birth_date, CURDATE()), ' years - ',
-    TIMESTAMPDIFF(MONTH,DATE_ADD(birth_date , INTERVAL TIMESTAMPDIFF(YEAR,birth_date, CURDATE()) YEAR), now()), ' months -',
+    	TIMESTAMPDIFF(MONTH,DATE_ADD(birth_date , INTERVAL TIMESTAMPDIFF(YEAR,birth_date, CURDATE()) YEAR), now()), ' months -',
 	TIMESTAMPDIFF(DAY, DATE_ADD(birth_date, INTERVAL TIMESTAMPDIFF(MONTH, birth_date, CURDATE()) MONTH), now()), ' days') AS age
  FROM user
  ORDER BY age DESC; 
@@ -636,10 +636,10 @@ SELECT
  # if the user is between 18 and 50 years onl he is young
  # if the user is above 50 years ol he is old 
 SELECT 
-	u.username,
+    u.username,
     TIMESTAMPDIFF(YEAR, birth_date, CURDATE()) AS age,
     IF(TIMESTAMPDIFF(YEAR, birth_date, CURDATE()) < 18, 'MINOR',
-		IF(TIMESTAMPDIFF(YEAR, birth_date, CURDATE()) BETWEEN 18 AND 50,  'YOUNG', 'OLD')) AS category
+	IF(TIMESTAMPDIFF(YEAR, birth_date, CURDATE()) BETWEEN 18 AND 50,  'YOUNG', 'OLD')) AS category
 FROM user u;
     
 # PREDIFINED FUNCTIONS 3 ----------------------------------------------------------------------  
@@ -747,15 +747,15 @@ SELECT
 	count(u.id)
 INTO
 	message,
-    countId
+    	countId
 FROM address a
 JOIN user u ON u.id = a.id_user
 WHERE a.country = 
-				(SELECT a.country 
-				FROM address a
-				JOIN user u ON u.id = a.id_user
-				WHERE u.username = username);
-  
+		(SELECT a.country 
+		FROM address a
+		JOIN user u ON u.id = a.id_user
+		WHERE u.username = username);
+
   
 IF countId > 0 THEN
 	RETURN message;
@@ -779,7 +779,7 @@ SET @result = NULL;
 DELIMITER //
 CREATE FUNCTION showSongTimes(artistName VARCHAR(100)) RETURNS TEXT
 BEGIN
-	DECLARE songsTime TIME;
+    DECLARE songsTime TIME;
     DECLARE countSongs INT;
     DECLARE songNames TEXT;
     DECLARE returnedText TEXT;
@@ -788,7 +788,7 @@ BEGIN
 		SEC_TO_TIME(SUM(TIME_TO_SEC(s.duration))),
 		count(s.id),
 		GROUP_CONCAT(s.title ORDER BY s.title SEPARATOR '; ')
-    INTO
+    	INTO
 		songsTime,
 		countSongs,
 		songNames
@@ -820,7 +820,7 @@ CREATE FUNCTION giveBonusPremiumMonth(firstName VARCHAR(50), lastName VARCHAR(50
 BEGIN 
 	DECLARE joinYears INT;
 	DECLARE typeOfAccount VARCHAR(15);
-    DECLARE response VARCHAR(100);
+    	DECLARE response VARCHAR(100);
 
 	 SELECT
 		TIMESTAMPDIFF(YEAR, u.join_date, curdate()),
@@ -943,11 +943,11 @@ WHERE s.title = songName;
     END IF;
     
     IF users_count < 3 AND users_count >= 1 THEN
-  		SET message = concat(songName, ' is not a HIT!!!!!!!');
-  	END IF;
+	SET message = concat(songName, ' is not a HIT!!!!!!!');
+    END IF;
     
     IF users_count = 0 AND song_id > 0 THEN
-		SET message = concat(' No user has ', songName, ' in theyer playlist');
+	SET message = concat(' No user has ', songName, ' in theyer playlist');
         SET users = '0';
         SET users_count = 0;
 	END IF;
@@ -975,7 +975,7 @@ CALL showUsername ('freedom');
 #CURSOR 1----------------------------------------------------------
 #create a procedure that populates the table comercial_table -> depending of the users age and account specify if the app will send comercials or not.
 CREATE TABLE IF NOT EXISTS comercial_table(
-	id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
     user_name VARCHAR(110) NOT NULL,
     years INT,
     account_type VARCHAR(20),
@@ -1055,7 +1055,7 @@ SELECT * FROM comercial_table;
 DELIMITER //
 CREATE PROCEDURE groupSongsAndPlaylists(IN user_name VARCHAR(50), OUT song_count INT, out playListSongs TEXT, OUT groupPlayList TEXT )
 BEGIN    
-	DECLARE flag INT DEFAULT 1;
+    DECLARE flag INT DEFAULT 1;
     DECLARE songId INT default 0;
     DECLARE songs TEXT;
     DECLARE playList VARCHAR(100);
@@ -1171,13 +1171,13 @@ CALL showWhatSongsFromAlbumsAreInUsersPlaylists('Mythologie');
 ##########################################   PROJECT 9 PROJECT BEGIN    ###########################################
 
 #TRIGGER 1----------------------------------------------------------
-#create a trigger that creates an email with: first_name-last_name@spotify.com if the user doesn't have one, and if it is user birthday
+#create a trigger that creates an email with: first_name-last_name@spotify.com if the user doesnt have one, and if it is user birthday
 #and he has a NORMAL account give him a PREMIUM account;
 DELIMITER //
 CREATE TRIGGER beforeInsertUser BEFORE INSERT ON user
 FOR EACH ROW
 BEGIN 
-	DECLARE dayOfBirth INT DEFAULT 0;
+    DECLARE dayOfBirth INT DEFAULT 0;
     DECLARE monthOfBirth INT DEFAULT 0;
 
 		IF(NEW.email IS NULL) THEN
@@ -1188,8 +1188,8 @@ BEGIN
         SET monthOfBirth = EXTRACT(MONTH FROM NEW.birth_date);
         
         IF(NEW.account_type = 'NORMAL' AND ( dayOfBirth = EXTRACT(DAY FROM CURDATE()) AND monthOfBirth = EXTRACT(MONTH FROM CURDATE()))) THEN
-			SET NEW.account_type = 'PREMIUM';
-		END IF;
+		SET NEW.account_type = 'PREMIUM';
+	END IF;
 END;
 //
 DELIMITER ;
@@ -1211,11 +1211,11 @@ FOR EACH ROW
 BEGIN
 	
     IF(OLD.account_type = 'NORMAL' AND NEW.account_type = 'PREMIUM') THEN
-		SET @sendEmail = concat('Thank you ', OLD.first_name, ' ', OLD.last_name, ' for purcesing PREMIUM account!!!!');
-	END IF;
+	SET @sendEmail = concat('Thank you ', OLD.first_name, ' ', OLD.last_name, ' for purcesing PREMIUM account!!!!');
+    END IF;
     
     IF(OLD.account_type = 'PREMIUM' AND NEW.account_type = 'NORMAL') THEN
-		SET @sendEmail = concat('This is not nice ', OLD.first_name, ' ', OLD.last_name, ', now the app will spam you with ads!!!!');
+	SET @sendEmail = concat('This is not nice ', OLD.first_name, ' ', OLD.last_name, ', now the app will spam you with ads!!!!');
     END IF;
 END;
 //
@@ -1235,7 +1235,7 @@ BEGIN
 	DECLARE songName VARCHAR(100) DEFAULT '';
     
 
-		SELECT  distinct s.title INTO songName
+	SELECT  distinct s.title INTO songName
         FROM song s
         WHERE s.title = NEW.title;
 
