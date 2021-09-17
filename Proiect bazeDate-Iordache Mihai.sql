@@ -527,9 +527,9 @@ FROM user u
 	JOIN song s ON s.id = pls.id_song
 	JOIN artist art ON art.id = s.id_artist
 WHERE u.join_date =
-				(SELECT
-				MIN(u.join_date)
-				FROM USER u) 
+		(SELECT
+		MIN(u.join_date)
+		FROM USER u) 
 ORDER BY artist;
 
 
