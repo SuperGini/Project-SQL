@@ -609,7 +609,7 @@ SELECT
     count(pls.id_song) AS nr_of_songs,
 	GROUP_CONCAT(s.title ORDER BY s.title SEPARATOR ' // ') AS songs
 FROM user u
-	JOIN play_list pl ON u.id = pl.id_user
+    JOIN play_list pl ON u.id = pl.id_user
     JOIN play_list_song pls ON pl.id = pls.id_play_list
     JOIN song s ON pls.id_song = s.id
 GROUP BY pl.name, user
